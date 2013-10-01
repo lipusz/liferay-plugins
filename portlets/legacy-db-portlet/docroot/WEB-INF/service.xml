@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.1.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_1_0.dtd">
+
+<service-builder package-path="com.liferay.support.portlet.legacy">
+	<author>Tibor Lipusz</author>
+	<namespace>BookInventory</namespace>
+
+	<entity name="Book" data-source="bookInventoryDataSource" local-service="true" table="BookTable" >
+
+		<!-- PK fields -->
+
+		<column name="bookId" type="long" primary="true" />
+
+		<!-- Other fields -->
+
+		<column name="bookName" type="String" />
+	</entity>
+</service-builder>

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	<bean id="com.liferay.support.portlet.legacy.service.BookLocalService" class="com.liferay.support.portlet.legacy.service.impl.BookLocalServiceImpl" />
+	<bean id="com.liferay.support.portlet.legacy.service.BookService" class="com.liferay.support.portlet.legacy.service.impl.BookServiceImpl" />
+	<bean id="com.liferay.support.portlet.legacy.service.persistence.BookPersistence" class="com.liferay.support.portlet.legacy.service.persistence.BookPersistenceImpl" parent="basePersistence">
+		<property name="dataSource" ref="bookInventoryDataSource" />
+	</bean>
+</beans>

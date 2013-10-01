@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.support.portlet.legacy.model.Book">
+		<field name="bookId" type="long" />
+		<field name="bookName" type="String" />
+	</model>
+</model-hints>

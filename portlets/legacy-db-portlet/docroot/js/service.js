@@ -1,0 +1,1 @@
+Liferay.Service.register("Liferay.Service.BookInventory", "com.liferay.support.portlet.legacy.service", "legacy-db-portlet");
