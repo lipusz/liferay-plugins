@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
@@ -12,8 +11,25 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<aui:input name="<%= displayTerms.LAST_NAME %>" size="20" type="text" value="<%= displayTerms.getLastName() %>" />
+package com.liferay.so.activities.hook.upgrade;
 
-<aui:input name="<%= displayTerms.FIRST_NAME %>" size="20" type="text" value="<%= displayTerms.getFirstName() %>" />
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.so.activities.hook.upgrade.v1_0_0.UpgradeSocial;
+
+/**
+ * @author Matthew Kong
+ */
+public class UpgradeProcess_1_0_0 extends UpgradeProcess {
+
+	@Override
+	public int getThreshold() {
+		return 100;
+	}
+
+	@Override
+	protected void doUpgrade() throws Exception {
+		upgrade(UpgradeSocial.class);
+	}
+
+}
