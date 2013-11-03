@@ -284,6 +284,10 @@ List<Calendar> manageableCalendars = CalendarServiceUtil.search(themeDisplay.get
 		return <%= calendarBookingId %> !== calendarBooking.calendarBookingId;
 	}
 
+	function <portlet:namespace />getSuggestionsContent() {
+		return document.<portlet:namespace />fm.<portlet:namespace />title.value + ' ' + document.<portlet:namespace />fm.<portlet:namespace />description.value;
+	}
+
 	Liferay.provide(
 		window,
 		'<portlet:namespace />updateCalendarBooking',
