@@ -43,6 +43,11 @@ public class DefaultBuddyFinderImpl implements BuddyFinder {
 				companyId, userId, modifiedDate, 0,
 				PortletPropsValues.BUDDY_LIST_MAX_BUDDIES);
 		}
+		else if (PortletPropsValues.BUDDY_LIST_STRATEGY.equals("connections")) {
+			buddies = StatusLocalServiceUtil.getSocialStatuses(
+				userId, SocialRelationConstants.TYPE_BI_CONNECTION,
+				modifiedDate, 0, PortletPropsValues.BUDDY_LIST_MAX_BUDDIES);
+		}
 		else if (PortletPropsValues.BUDDY_LIST_STRATEGY.equals("communities") ||
 				 PortletPropsValues.BUDDY_LIST_STRATEGY.equals("sites")) {
 
