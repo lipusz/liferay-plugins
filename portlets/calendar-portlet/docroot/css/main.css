@@ -331,16 +331,6 @@
 	}
 }
 
-.property-list {
-	margin-left: 0;
-	margin-top: 0;
-	padding: 0;
-
-	dt {
-		font-weight: bold;
-	}
-}
-
 .rss-time-interval {
 	margin-left: 2em;
 	margin-top: -1em;
@@ -364,7 +354,7 @@
 	border: 1px solid #C4C4C4;
 	outline-width: 0;
 	padding: 7px;
-	width: 482px;
+	width: 90%;
 }
 
 .scheduler-event-recorder-header .scheduler-event-recorder-content:hover {
