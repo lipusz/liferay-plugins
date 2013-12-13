@@ -76,27 +76,7 @@ AUI().use(
 
 				time = new Date(time);
 
-				var meridian = 'am';
-				var hour = time.getHours();
-				var minute = time.getMinutes();
-
-				if (hour >= 12) {
-					meridian = 'pm';
-				}
-
-				if (hour > 12) {
-					hour -= 12;
-				}
-
-				if (hour === 0) {
-					hour += 12;
-				}
-
-				if (minute < 10) {
-					minute = '0' + minute;
-				}
-
-				return hour + ':' + minute + ' ' + meridian;
+				return time.toLocaleTimeString();
 			},
 
 			getCurrentTimestamp: function() {
