@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This file is part of Liferay Social Office. Liferay Social Office is free
  * software: you can redistribute it and/or modify it under the terms of the GNU
@@ -21,10 +21,12 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.notifications.BaseUserNotificationHandler;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.UserNotificationEvent;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserNotificationEventLocalServiceUtil;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
@@ -62,15 +64,19 @@ public class TasksUserNotificationHandler extends BaseUserNotificationHandler {
 			return null;
 		}
 
-		StringBundler sb = new StringBundler(5);
+		String title = serviceContext.translate(
+			jsonObject.getString("title"),
+			HtmlUtil.escape(
+				PortalUtil.getUserName(
+					jsonObject.getLong("userId"), StringPool.BLANK)));
 
-		sb.append("<div class=\"title\">");
-		sb.append(HtmlUtil.escape(jsonObject.getString("title")));
-		sb.append("</div><div class=\"body\">");
-		sb.append(HtmlUtil.escape(tasksEntry.getTitle()));
-		sb.append("</div>");
-
-		return sb.toString();
+		return StringUtil.replace(
+			getBodyTemplate(), new String[] {"[$BODY$]", "[$TITLE$]"},
+			new String[] {
+				HtmlUtil.escape(
+					StringUtil.shorten(HtmlUtil.escape(tasksEntry.getTitle()))),
+				title
+			});
 	}
 
 	@Override

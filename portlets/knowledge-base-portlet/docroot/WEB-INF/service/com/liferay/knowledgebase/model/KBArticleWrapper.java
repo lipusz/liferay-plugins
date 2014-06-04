@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -63,6 +63,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 		attributes.put("parentResourcePrimKey", getParentResourcePrimKey());
 		attributes.put("version", getVersion());
 		attributes.put("title", getTitle());
+		attributes.put("urlTitle", getUrlTitle());
 		attributes.put("content", getContent());
 		attributes.put("description", getDescription());
 		attributes.put("priority", getPriority());
@@ -157,6 +158,12 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 
 		if (title != null) {
 			setTitle(title);
+		}
+
+		String urlTitle = (String)attributes.get("urlTitle");
+
+		if (urlTitle != null) {
+			setUrlTitle(urlTitle);
 		}
 
 		String content = (String)attributes.get("content");
@@ -534,6 +541,26 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	}
 
 	/**
+	* Returns the url title of this k b article.
+	*
+	* @return the url title of this k b article
+	*/
+	@Override
+	public java.lang.String getUrlTitle() {
+		return _kbArticle.getUrlTitle();
+	}
+
+	/**
+	* Sets the url title of this k b article.
+	*
+	* @param urlTitle the url title of this k b article
+	*/
+	@Override
+	public void setUrlTitle(java.lang.String urlTitle) {
+		_kbArticle.setUrlTitle(urlTitle);
+	}
+
+	/**
 	* Returns the content of this k b article.
 	*
 	* @return the content of this k b article
@@ -798,6 +825,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	/**
 	* @deprecated As of 6.1.0, replaced by {@link #isApproved()}
 	*/
+	@Deprecated
 	@Override
 	public boolean getApproved() {
 		return _kbArticle.getApproved();
@@ -988,6 +1016,13 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	}
 
 	@Override
+	public java.util.List<java.lang.Long> getAncestorResourcePrimaryKeys()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _kbArticle.getAncestorResourcePrimaryKeys();
+	}
+
+	@Override
 	public java.lang.String getAttachmentsDirName() {
 		return _kbArticle.getAttachmentsDirName();
 	}
@@ -1016,6 +1051,13 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	@Override
 	public long getClassPK() {
 		return _kbArticle.getClassPK();
+	}
+
+	@Override
+	public com.liferay.knowledgebase.model.KBArticle getParentKBArticle()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _kbArticle.getParentKBArticle();
 	}
 
 	@Override
@@ -1055,6 +1097,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
+	@Deprecated
 	public KBArticle getWrappedKBArticle() {
 		return _kbArticle;
 	}
@@ -1062,6 +1105,16 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	@Override
 	public KBArticle getWrappedModel() {
 		return _kbArticle;
+	}
+
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _kbArticle.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _kbArticle.isFinderCacheEnabled();
 	}
 
 	@Override

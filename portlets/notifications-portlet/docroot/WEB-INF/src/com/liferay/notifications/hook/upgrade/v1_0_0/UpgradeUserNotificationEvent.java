@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -14,6 +14,7 @@
 
 package com.liferay.notifications.hook.upgrade.v1_0_0;
 
+import com.liferay.notifications.util.PortletKeys;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -89,6 +90,10 @@ public class UpgradeUserNotificationEvent extends UpgradeProcess {
 					return;
 				}
 
+				if (type.equals(PortletKeys.ANNOUNCEMENTS)) {
+					type = PortletKeys.SO_ANNOUNCEMENTS;
+				}
+
 				payloadJSONObject.remove("portletId");
 
 				long entryId = payloadJSONObject.getLong("entryId");
@@ -97,6 +102,26 @@ public class UpgradeUserNotificationEvent extends UpgradeProcess {
 					payloadJSONObject.put("classPK", entryId);
 
 					payloadJSONObject.remove("entryId");
+				}
+				else if (type.equals(PortletKeys.CONTACTS_CENTER)) {
+					long socialRequestId = payloadJSONObject.getLong(
+						"requestId");
+
+					if (socialRequestId > 0) {
+						payloadJSONObject.put("classPK", socialRequestId);
+
+						payloadJSONObject.remove("socialRequestId");
+					}
+				}
+				else if (type.equals(PortletKeys.SO_INVITE_MEMBERS)) {
+					long memberRequestId = payloadJSONObject.getLong(
+						"memberRequestId");
+
+					if (memberRequestId > 0) {
+						payloadJSONObject.put("classPK", memberRequestId);
+
+						payloadJSONObject.remove("memberRequestId");
+					}
 				}
 
 				updateNotification(

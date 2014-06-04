@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -194,7 +194,7 @@ public class ModulesAdminPortlet extends FreeMarkerPortlet {
 			json = jsonObject.toString();
 		}
 		catch (BundleException be) {
-			json = JSONFactoryUtil.serializeException(be);
+			json = JSONFactoryUtil.serializeThrowable(be);
 		}
 
 		writeJSON(resourceRequest, resourceResponse, json);
@@ -266,8 +266,8 @@ public class ModulesAdminPortlet extends FreeMarkerPortlet {
 	}
 
 	/**
-	 * @see {@link com.liferay.osgi.bootstrap.ModuleFrameworkImpl#getBundle(
-	 *      BundleContext, InputStream)}
+	 * @see com.liferay.osgi.bootstrap.ModuleFrameworkImpl#getBundle(
+	 *      BundleContext, InputStream)
 	 */
 	protected Bundle getBundle(
 			BundleContext bundleContext, InputStream inputStream)

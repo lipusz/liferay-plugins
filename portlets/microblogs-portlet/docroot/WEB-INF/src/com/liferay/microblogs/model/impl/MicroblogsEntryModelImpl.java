@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -19,6 +19,7 @@ import com.liferay.microblogs.model.MicroblogsEntryModel;
 import com.liferay.microblogs.model.MicroblogsEntrySoap;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.DateUtil;
@@ -27,9 +28,10 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.User;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.service.UserLocalServiceUtil;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
@@ -96,11 +98,12 @@ public class MicroblogsEntryModelImpl extends BaseModelImpl<MicroblogsEntry>
 				"value.object.column.bitmask.enabled.com.liferay.microblogs.model.MicroblogsEntry"),
 			true);
 	public static long COMPANYID_COLUMN_BITMASK = 1L;
-	public static long RECEIVERMICROBLOGSENTRYID_COLUMN_BITMASK = 2L;
-	public static long RECEIVERUSERID_COLUMN_BITMASK = 4L;
-	public static long TYPE_COLUMN_BITMASK = 8L;
-	public static long USERID_COLUMN_BITMASK = 16L;
-	public static long CREATEDATE_COLUMN_BITMASK = 32L;
+	public static long CREATEDATE_COLUMN_BITMASK = 2L;
+	public static long RECEIVERMICROBLOGSENTRYID_COLUMN_BITMASK = 4L;
+	public static long RECEIVERUSERID_COLUMN_BITMASK = 8L;
+	public static long SOCIALRELATIONTYPE_COLUMN_BITMASK = 16L;
+	public static long TYPE_COLUMN_BITMASK = 32L;
+	public static long USERID_COLUMN_BITMASK = 64L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -203,6 +206,9 @@ public class MicroblogsEntryModelImpl extends BaseModelImpl<MicroblogsEntry>
 		attributes.put("receiverMicroblogsEntryId",
 			getReceiverMicroblogsEntryId());
 		attributes.put("socialRelationType", getSocialRelationType());
+
+		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
+		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
 
 		return attributes;
 	}
@@ -333,12 +339,18 @@ public class MicroblogsEntryModelImpl extends BaseModelImpl<MicroblogsEntry>
 
 	@Override
 	public String getUserUuid() throws SystemException {
-		return PortalUtil.getUserValue(getUserId(), "uuid", _userUuid);
+		try {
+			User user = UserLocalServiceUtil.getUserById(getUserId());
+
+			return user.getUuid();
+		}
+		catch (PortalException pe) {
+			return StringPool.BLANK;
+		}
 	}
 
 	@Override
 	public void setUserUuid(String userUuid) {
-		_userUuid = userUuid;
 	}
 
 	public long getOriginalUserId() {
@@ -371,7 +383,15 @@ public class MicroblogsEntryModelImpl extends BaseModelImpl<MicroblogsEntry>
 	public void setCreateDate(Date createDate) {
 		_columnBitmask = -1L;
 
+		if (_originalCreateDate == null) {
+			_originalCreateDate = _createDate;
+		}
+
 		_createDate = createDate;
+	}
+
+	public Date getOriginalCreateDate() {
+		return _originalCreateDate;
 	}
 
 	@JSON
@@ -445,13 +465,18 @@ public class MicroblogsEntryModelImpl extends BaseModelImpl<MicroblogsEntry>
 
 	@Override
 	public String getReceiverUserUuid() throws SystemException {
-		return PortalUtil.getUserValue(getReceiverUserId(), "uuid",
-			_receiverUserUuid);
+		try {
+			User user = UserLocalServiceUtil.getUserById(getReceiverUserId());
+
+			return user.getUuid();
+		}
+		catch (PortalException pe) {
+			return StringPool.BLANK;
+		}
 	}
 
 	@Override
 	public void setReceiverUserUuid(String receiverUserUuid) {
-		_receiverUserUuid = receiverUserUuid;
 	}
 
 	public long getOriginalReceiverUserId() {
@@ -489,7 +514,19 @@ public class MicroblogsEntryModelImpl extends BaseModelImpl<MicroblogsEntry>
 
 	@Override
 	public void setSocialRelationType(int socialRelationType) {
+		_columnBitmask |= SOCIALRELATIONTYPE_COLUMN_BITMASK;
+
+		if (!_setOriginalSocialRelationType) {
+			_setOriginalSocialRelationType = true;
+
+			_originalSocialRelationType = _socialRelationType;
+		}
+
 		_socialRelationType = socialRelationType;
+	}
+
+	public int getOriginalSocialRelationType() {
+		return _originalSocialRelationType;
 	}
 
 	public long getColumnBitmask() {
@@ -584,6 +621,16 @@ public class MicroblogsEntryModelImpl extends BaseModelImpl<MicroblogsEntry>
 	}
 
 	@Override
+	public boolean isEntityCacheEnabled() {
+		return ENTITY_CACHE_ENABLED;
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return FINDER_CACHE_ENABLED;
+	}
+
+	@Override
 	public void resetOriginalValues() {
 		MicroblogsEntryModelImpl microblogsEntryModelImpl = this;
 
@@ -594,6 +641,8 @@ public class MicroblogsEntryModelImpl extends BaseModelImpl<MicroblogsEntry>
 		microblogsEntryModelImpl._originalUserId = microblogsEntryModelImpl._userId;
 
 		microblogsEntryModelImpl._setOriginalUserId = false;
+
+		microblogsEntryModelImpl._originalCreateDate = microblogsEntryModelImpl._createDate;
 
 		microblogsEntryModelImpl._originalType = microblogsEntryModelImpl._type;
 
@@ -606,6 +655,10 @@ public class MicroblogsEntryModelImpl extends BaseModelImpl<MicroblogsEntry>
 		microblogsEntryModelImpl._originalReceiverMicroblogsEntryId = microblogsEntryModelImpl._receiverMicroblogsEntryId;
 
 		microblogsEntryModelImpl._setOriginalReceiverMicroblogsEntryId = false;
+
+		microblogsEntryModelImpl._originalSocialRelationType = microblogsEntryModelImpl._socialRelationType;
+
+		microblogsEntryModelImpl._setOriginalSocialRelationType = false;
 
 		microblogsEntryModelImpl._columnBitmask = 0;
 	}
@@ -763,24 +816,25 @@ public class MicroblogsEntryModelImpl extends BaseModelImpl<MicroblogsEntry>
 	private long _originalCompanyId;
 	private boolean _setOriginalCompanyId;
 	private long _userId;
-	private String _userUuid;
 	private long _originalUserId;
 	private boolean _setOriginalUserId;
 	private String _userName;
 	private Date _createDate;
+	private Date _originalCreateDate;
 	private Date _modifiedDate;
 	private String _content;
 	private int _type;
 	private int _originalType;
 	private boolean _setOriginalType;
 	private long _receiverUserId;
-	private String _receiverUserUuid;
 	private long _originalReceiverUserId;
 	private boolean _setOriginalReceiverUserId;
 	private long _receiverMicroblogsEntryId;
 	private long _originalReceiverMicroblogsEntryId;
 	private boolean _setOriginalReceiverMicroblogsEntryId;
 	private int _socialRelationType;
+	private int _originalSocialRelationType;
+	private boolean _setOriginalSocialRelationType;
 	private long _columnBitmask;
 	private MicroblogsEntry _escapedModel;
 }

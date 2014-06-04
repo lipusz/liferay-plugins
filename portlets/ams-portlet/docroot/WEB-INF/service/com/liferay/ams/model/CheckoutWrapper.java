@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -494,6 +494,7 @@ public class CheckoutWrapper implements Checkout, ModelWrapper<Checkout> {
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
+	@Deprecated
 	public Checkout getWrappedCheckout() {
 		return _checkout;
 	}
@@ -501,6 +502,16 @@ public class CheckoutWrapper implements Checkout, ModelWrapper<Checkout> {
 	@Override
 	public Checkout getWrappedModel() {
 		return _checkout;
+	}
+
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _checkout.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _checkout.isFinderCacheEnabled();
 	}
 
 	@Override

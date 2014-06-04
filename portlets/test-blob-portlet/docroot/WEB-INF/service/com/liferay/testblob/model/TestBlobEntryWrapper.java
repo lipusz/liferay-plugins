@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -223,7 +223,7 @@ public class TestBlobEntryWrapper implements TestBlobEntry,
 	}
 
 	@Override
-	public int compareTo(TestBlobEntry testBlobEntry) {
+	public int compareTo(com.liferay.testblob.model.TestBlobEntry testBlobEntry) {
 		return _testBlobEntry.compareTo(testBlobEntry);
 	}
 
@@ -233,17 +233,17 @@ public class TestBlobEntryWrapper implements TestBlobEntry,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<TestBlobEntry> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<com.liferay.testblob.model.TestBlobEntry> toCacheModel() {
 		return _testBlobEntry.toCacheModel();
 	}
 
 	@Override
-	public TestBlobEntry toEscapedModel() {
+	public com.liferay.testblob.model.TestBlobEntry toEscapedModel() {
 		return new TestBlobEntryWrapper(_testBlobEntry.toEscapedModel());
 	}
 
 	@Override
-	public TestBlobEntry toUnescapedModel() {
+	public com.liferay.testblob.model.TestBlobEntry toUnescapedModel() {
 		return new TestBlobEntryWrapper(_testBlobEntry.toUnescapedModel());
 	}
 
@@ -285,6 +285,7 @@ public class TestBlobEntryWrapper implements TestBlobEntry,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
+	@Deprecated
 	public TestBlobEntry getWrappedTestBlobEntry() {
 		return _testBlobEntry;
 	}
@@ -292,6 +293,16 @@ public class TestBlobEntryWrapper implements TestBlobEntry,
 	@Override
 	public TestBlobEntry getWrappedModel() {
 		return _testBlobEntry;
+	}
+
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _testBlobEntry.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _testBlobEntry.isFinderCacheEnabled();
 	}
 
 	@Override

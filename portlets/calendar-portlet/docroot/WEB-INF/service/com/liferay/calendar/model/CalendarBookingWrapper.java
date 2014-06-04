@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -1164,9 +1164,16 @@ public class CalendarBookingWrapper implements CalendarBooking,
 		return _calendarBooking.isInTrashExplicitly();
 	}
 
+	@Override
+	public boolean isInTrashImplicitly()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _calendarBooking.isInTrashImplicitly();
+	}
+
 	/**
 	* @deprecated As of 6.1.0, replaced by {@link #isApproved()}
 	*/
+	@Deprecated
 	@Override
 	public boolean getApproved() {
 		return _calendarBooking.getApproved();
@@ -1428,6 +1435,13 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	}
 
 	@Override
+	public java.util.TimeZone getTimeZone()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _calendarBooking.getTimeZone();
+	}
+
+	@Override
 	public boolean isMasterBooking() {
 		return _calendarBooking.isMasterBooking();
 	}
@@ -1465,6 +1479,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
+	@Deprecated
 	public CalendarBooking getWrappedCalendarBooking() {
 		return _calendarBooking;
 	}
@@ -1472,6 +1487,16 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	@Override
 	public CalendarBooking getWrappedModel() {
 		return _calendarBooking;
+	}
+
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _calendarBooking.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _calendarBooking.isFinderCacheEnabled();
 	}
 
 	@Override

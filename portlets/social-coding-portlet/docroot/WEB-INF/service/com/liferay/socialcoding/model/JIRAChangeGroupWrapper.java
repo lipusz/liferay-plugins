@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -313,6 +313,7 @@ public class JIRAChangeGroupWrapper implements JIRAChangeGroup,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
+	@Deprecated
 	public JIRAChangeGroup getWrappedJIRAChangeGroup() {
 		return _jiraChangeGroup;
 	}
@@ -320,6 +321,16 @@ public class JIRAChangeGroupWrapper implements JIRAChangeGroup,
 	@Override
 	public JIRAChangeGroup getWrappedModel() {
 		return _jiraChangeGroup;
+	}
+
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _jiraChangeGroup.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _jiraChangeGroup.isFinderCacheEnabled();
 	}
 
 	@Override

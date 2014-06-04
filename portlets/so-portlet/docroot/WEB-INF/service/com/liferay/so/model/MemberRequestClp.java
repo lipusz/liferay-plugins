@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -15,13 +15,17 @@
 package com.liferay.so.model;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.DateUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.model.User;
 import com.liferay.portal.model.impl.BaseModelImpl;
-import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.service.UserLocalServiceUtil;
 
 import com.liferay.so.service.ClpSerializer;
 import com.liferay.so.service.MemberRequestLocalServiceUtil;
@@ -88,6 +92,9 @@ public class MemberRequestClp extends BaseModelImpl<MemberRequest>
 		attributes.put("invitedRoleId", getInvitedRoleId());
 		attributes.put("invitedTeamId", getInvitedTeamId());
 		attributes.put("status", getStatus());
+
+		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
+		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
 
 		return attributes;
 	}
@@ -165,6 +172,9 @@ public class MemberRequestClp extends BaseModelImpl<MemberRequest>
 		if (status != null) {
 			setStatus(status);
 		}
+
+		_entityCacheEnabled = GetterUtil.getBoolean("entityCacheEnabled");
+		_finderCacheEnabled = GetterUtil.getBoolean("finderCacheEnabled");
 	}
 
 	@Override
@@ -261,12 +271,18 @@ public class MemberRequestClp extends BaseModelImpl<MemberRequest>
 
 	@Override
 	public String getUserUuid() throws SystemException {
-		return PortalUtil.getUserValue(getUserId(), "uuid", _userUuid);
+		try {
+			User user = UserLocalServiceUtil.getUserById(getUserId());
+
+			return user.getUuid();
+		}
+		catch (PortalException pe) {
+			return StringPool.BLANK;
+		}
 	}
 
 	@Override
 	public void setUserUuid(String userUuid) {
-		_userUuid = userUuid;
 	}
 
 	@Override
@@ -386,13 +402,18 @@ public class MemberRequestClp extends BaseModelImpl<MemberRequest>
 
 	@Override
 	public String getReceiverUserUuid() throws SystemException {
-		return PortalUtil.getUserValue(getReceiverUserId(), "uuid",
-			_receiverUserUuid);
+		try {
+			User user = UserLocalServiceUtil.getUserById(getReceiverUserId());
+
+			return user.getUuid();
+		}
+		catch (PortalException pe) {
+			return StringPool.BLANK;
+		}
 	}
 
 	@Override
 	public void setReceiverUserUuid(String receiverUserUuid) {
-		_receiverUserUuid = receiverUserUuid;
 	}
 
 	@Override
@@ -594,6 +615,16 @@ public class MemberRequestClp extends BaseModelImpl<MemberRequest>
 	}
 
 	@Override
+	public boolean isEntityCacheEnabled() {
+		return _entityCacheEnabled;
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _finderCacheEnabled;
+	}
+
+	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(25);
 
@@ -692,15 +723,15 @@ public class MemberRequestClp extends BaseModelImpl<MemberRequest>
 	private long _groupId;
 	private long _companyId;
 	private long _userId;
-	private String _userUuid;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private String _key;
 	private long _receiverUserId;
-	private String _receiverUserUuid;
 	private long _invitedRoleId;
 	private long _invitedTeamId;
 	private int _status;
 	private BaseModel<?> _memberRequestRemoteModel;
+	private boolean _entityCacheEnabled;
+	private boolean _finderCacheEnabled;
 }

@@ -1,6 +1,6 @@
 <%--
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This file is part of Liferay Social Office. Liferay Social Office is free
  * software: you can redistribute it and/or modify it under the terms of the GNU
@@ -40,6 +40,13 @@ Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 		<div class="search">
 			<div class="list"></div>
 		</div>
+
+		<liferay-ui:icon
+			cssClass="footnote"
+			image="check"
+			label="<%= true %>"
+			message="previous-invitation-was-sent"
+		/>
 	</div>
 
 	<div class="invited-users-wrapper">
@@ -90,7 +97,7 @@ Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 					for (Role role : roles) {
 					%>
 
-						<option value="<%= role.getRoleId() %>"><%= HtmlUtil.escape(role.getName()) %></option>
+						<option value="<%= role.getRoleId() %>"><%= HtmlUtil.escape(role.getTitle(locale)) %></option>
 
 					<%
 					}
@@ -160,7 +167,7 @@ Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 		return new A.DataSource.IO(
 			{
 				ioConfig: {
-					method: "post"
+					method: 'POST'
 				},
 				on: {
 					request: function(event) {
@@ -236,7 +243,7 @@ Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 						return A.Lang.sub(
 							userTemplate,
 							{
-								cssClass: invited ? "invited user" : "user",
+								cssClass: result.hasPendingMemberRequest ? "pending-member-request user" : (invited ? "invited user" : "user"),
 								userEmailAddress: result.userEmailAddress,
 								userFullName: result.userFullName,
 								userId: result.userId
@@ -300,7 +307,7 @@ Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 						<portlet:namespace />keywords: inviteUserSearch.get('value'),
 						<portlet:namespace />start: <portlet:namespace />start
 					},
-					dataType: 'json'
+					dataType: 'JSON'
 				}
 			);
 		},

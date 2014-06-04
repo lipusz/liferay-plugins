@@ -1,6 +1,6 @@
 <%--
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This file is part of Liferay Social Office. Liferay Social Office is free
  * software: you can redistribute it and/or modify it under the terms of the GNU
@@ -63,8 +63,8 @@ if (entry == null) {
 				<%
 				String distributionScope = ParamUtil.getString(request, "distributionScope");
 
-				long classNameId = -1;
-				long classPK = -1;
+				long classNameId = 0;
+				long classPK = 0;
 
 				String[] distributionScopeArray = StringUtil.split(distributionScope);
 
@@ -72,12 +72,17 @@ if (entry == null) {
 					classNameId = GetterUtil.getLong(distributionScopeArray[0]);
 					classPK = GetterUtil.getLong(distributionScopeArray[1]);
 				}
+				else if (!group.isUser()) {
+					classNameId = PortalUtil.getClassNameId(Group.class);
+					classPK = themeDisplay.getScopeGroupId();
+				}
 
 				boolean submitOnChange = false;
 				%>
 
-				<%@ include file="/entry_select_scope.jspf" %>
-
+				<div class="distribution-scope-container">
+					<%@ include file="/entry_select_scope.jspf" %>
+				</div>
 			</c:otherwise>
 		</c:choose>
 
@@ -130,49 +135,51 @@ if (entry == null) {
 	</aui:button-row>
 </aui:form>
 
-<div class="entry hide" id="<portlet:namespace />preview">
-	<div class="user-portrait">
-		<span class="avatar">
+<div class="entries preview unread-entries">
+	<div class="clearfix entry hide" id="<portlet:namespace />preview">
+		<div class="user-portrait">
+			<span class="avatar">
 
-			<%
-			User currentUser = UserLocalServiceUtil.getUserById(themeDisplay.getUserId());
-			%>
+				<%
+				User currentUser = UserLocalServiceUtil.getUserById(themeDisplay.getUserId());
+				%>
 
-			<a href="<%= currentUser.getDisplayURL(themeDisplay) %>">
-				<img alt="<%= currentUser.getFullName() %>" src="<%= currentUser.getPortraitURL(themeDisplay) %>" />
-			</a>
-		</span>
-	</div>
+				<a href="<%= currentUser.getDisplayURL(themeDisplay) %>">
+					<img alt="<%= currentUser.getFullName() %>" src="<%= currentUser.getPortraitURL(themeDisplay) %>" />
+				</a>
+			</span>
+		</div>
 
-	<div class="entry-data">
 		<div class="entry-header">
+			<div class="entry-action">
+				<%= LanguageUtil.format(pageContext, "x-to-x", new Object[] {"<a href=\"" + currentUser.getDisplayURL(themeDisplay) + "\">" + HtmlUtil.escape(currentUser.getFullName()) + "</a>", "<span class=\"scope\" id=\"" + renderResponse.getNamespace() + "scope\"></span>"}, false) %>
+			</div>
+
 			<div class="entry-time">
 				<%= LanguageUtil.get(pageContext, "about-a-minute-ago") %>
 			</div>
-
-			<div class="entry-action">
-				<%= LanguageUtil.format(pageContext, "x-to-x", new Object[] {"<a href=\"" + currentUser.getDisplayURL(themeDisplay) + "\">" + currentUser.getFullName() + "</a>", "<span class=\"scope\" id=\"" + renderResponse.getNamespace() + "scope\"></span>"}) %>
-			</div>
 		</div>
 
-		<div class="entry-body">
-			<div class="title" id="<portlet:namespace />title"></div>
+		<div class="entry-block">
+			<div class="entry-body">
+				<div class="title" id="<portlet:namespace />title"></div>
 
-			<div class="entry-content-container" id="<portlet:namespace />entryContentContainer">
-				<div class="entry-content" id="<portlet:namespace />entryContent"></div>
+				<div class="entry-content-container" id="<portlet:namespace />entryContentContainer">
+					<div class="entry-content" id="<portlet:namespace />entryContent"></div>
+				</div>
 			</div>
-		</div>
 
-		<div class="entry-footer" id="<portlet:namespace />entryFooter">
-			<div class="entry-footer-toolbar">
-				<div class="edit-actions">
-					<span class="toggle action hide">
-						<a class="toggle-entry" data-entryId="preview" href="javascript:;">
-							<i class="icon-expand-alt"></i>
+			<div class="entry-footer" id="<portlet:namespace />entryFooter">
+				<div class="entry-footer-toolbar">
+					<div class="edit-actions">
+						<span class="action hide toggle">
+							<a class="toggle-entry" data-entryId="preview" href="javascript:;">
+								<i class="icon-expand-alt"></i>
 
-							<span><liferay-ui:message key="view-more" /></span>
-						</a>
-					</span>
+								<span><liferay-ui:message key="view-more" /></span>
+							</a>
+						</span>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -181,11 +188,11 @@ if (entry == null) {
 
 <aui:script>
 	function <portlet:namespace />initEditor() {
-		var ckEditor = CKEDITOR.instances["<portlet:namespace />editor"];
+		var ckEditor = CKEDITOR.instances['<portlet:namespace />editor'];
 
-		ckEditor.resize("100%", "200");
+		ckEditor.resize('100%', '200');
 
-		return "<%= UnicodeFormatter.toString(content) %>";
+		return '<%= UnicodeFormatter.toString(content) %>';
 	}
 
 	function <portlet:namespace />closeEntry() {
@@ -211,7 +218,7 @@ if (entry == null) {
 		}
 
 		if (<%= entry != null %>) {
-			var scope = A.one('#<portlet:namespace />scope').get('value');;
+			var scope = A.one('#<portlet:namespace />scope').get('value');
 		}
 		else {
 			var optValue = A.one('select[name="<portlet:namespace />distributionScope"]').get('value');
@@ -229,7 +236,7 @@ if (entry == null) {
 			var title = A.one('#<portlet:namespace />title').get('value');
 		}
 
-		A.one('#<portlet:namespace />title').html(title);
+		A.one('.preview #<portlet:namespace />title').html(title);
 
 		var content = window.<portlet:namespace />editor.getHTML();
 
@@ -287,7 +294,7 @@ if (entry == null) {
 						}
 					}
 				},
-				dataType: 'json',
+				dataType: 'JSON',
 				form: {
 					id: form
 				}

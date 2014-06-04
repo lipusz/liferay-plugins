@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -255,6 +255,7 @@ public class BarWrapper implements Bar, ModelWrapper<Bar> {
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
+	@Deprecated
 	public Bar getWrappedBar() {
 		return _bar;
 	}
@@ -262,6 +263,16 @@ public class BarWrapper implements Bar, ModelWrapper<Bar> {
 	@Override
 	public Bar getWrappedModel() {
 		return _bar;
+	}
+
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _bar.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _bar.isFinderCacheEnabled();
 	}
 
 	@Override

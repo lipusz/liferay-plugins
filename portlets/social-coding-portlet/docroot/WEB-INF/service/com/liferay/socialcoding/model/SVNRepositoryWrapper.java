@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -294,6 +294,7 @@ public class SVNRepositoryWrapper implements SVNRepository,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
+	@Deprecated
 	public SVNRepository getWrappedSVNRepository() {
 		return _svnRepository;
 	}
@@ -301,6 +302,16 @@ public class SVNRepositoryWrapper implements SVNRepository,
 	@Override
 	public SVNRepository getWrappedModel() {
 		return _svnRepository;
+	}
+
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _svnRepository.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _svnRepository.isFinderCacheEnabled();
 	}
 
 	@Override

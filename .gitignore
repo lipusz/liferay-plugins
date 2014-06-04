@@ -8,13 +8,16 @@
 *.swp
 .ant_targets
 .ant-targets-build.xml
-.ivy
 .sass-cache
 .sass_cache_*.css
 _sass_cache_*.css
 
+/.bnd
+/.ivy
+
 /*/*/bin
 /*/*/classes
+/*/*/javadoc
 /*/*/temp
 /*/*/test-classes
 /*/*/test-results
@@ -23,6 +26,7 @@ _sass_cache_*.css
 /*/*/docroot/WEB-INF/classes
 /*/*/docroot/WEB-INF/lib/portal-compat-shared.jar
 
+/baseline-reports
 /build.*.properties
 /dist
 /tools/*/*/*/lib

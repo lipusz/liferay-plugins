@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -575,6 +575,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
+	@Deprecated
 	public Definition getWrappedDefinition() {
 		return _definition;
 	}
@@ -582,6 +583,16 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	@Override
 	public Definition getWrappedModel() {
 		return _definition;
+	}
+
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _definition.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _definition.isFinderCacheEnabled();
 	}
 
 	@Override

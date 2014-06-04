@@ -1,6 +1,6 @@
 <%--
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -29,6 +29,7 @@ double priority = BeanParamUtil.getDouble(kbArticle, request, "priority");
 
 <liferay-ui:header
 	backURL="<%= redirect %>"
+	localizeTitle="<%= false %>"
 	title="<%= kbArticle.getTitle() %>"
 />
 
@@ -44,13 +45,11 @@ double priority = BeanParamUtil.getDouble(kbArticle, request, "priority");
 	<liferay-ui:error exception="<%= KBArticlePriorityException.class %>" message='<%= LanguageUtil.format(pageContext, "please-enter-a-priority-that-is-greater-than-x", "0", false) %>' translateMessage="<%= false %>" />
 
 	<aui:fieldset>
-		<aui:field-wrapper label="current-parent">
-			<div class="input-append">
-				<liferay-ui:input-resource url='<%= !kbArticle.isRoot() ? BeanPropertiesUtil.getString(KBArticleServiceUtil.getLatestKBArticle(kbArticle.getParentResourcePrimKey(), status), "title") : "(" + LanguageUtil.get(pageContext, "none") + ")" %>' />
+		<div class="control-group">
+			<aui:input name="currentParent" type="resource" value='<%= !kbArticle.isRoot() ? BeanPropertiesUtil.getString(KBArticleServiceUtil.getLatestKBArticle(kbArticle.getParentResourcePrimKey(), status), "title") : "(" + LanguageUtil.get(pageContext, "none") + ")" %>' />
 
-				<liferay-ui:input-resource cssClass="input-mini" url="<%= BigDecimal.valueOf(priority).toPlainString() %>" />
-			</div>
-		</aui:field-wrapper>
+			<aui:input cssClass="input-mini" label="" name="priority" type="resource" value="<%= BigDecimal.valueOf(priority).toPlainString() %>" />
+		</div>
 
 		<aui:field-wrapper label="new-parent">
 			<div id="<portlet:namespace />newParent">
@@ -69,6 +68,6 @@ double priority = BeanParamUtil.getDouble(kbArticle, request, "priority");
 <aui:script>
 	function <portlet:namespace />selectKBArticle(parentResourcePrimKey, html) {
 		document.<portlet:namespace />fm.<portlet:namespace />parentResourcePrimKey.value = parentResourcePrimKey;
-		document.getElementById("<portlet:namespace />newParent").innerHTML = html;
+		document.getElementById('<portlet:namespace />newParent').innerHTML = html;
 	}
 </aui:script>

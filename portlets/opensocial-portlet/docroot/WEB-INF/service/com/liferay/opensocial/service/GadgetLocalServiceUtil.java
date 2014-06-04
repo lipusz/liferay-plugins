@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -314,6 +314,11 @@ public class GadgetLocalServiceUtil {
 			serviceContext);
 	}
 
+	public static void deleteGadgets(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteGadgets(companyId);
+	}
+
 	public static void destroyGadget(java.lang.String uuid, long companyId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getService().destroyGadget(uuid, companyId);
@@ -403,6 +408,7 @@ public class GadgetLocalServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(GadgetLocalService service) {
 	}
 

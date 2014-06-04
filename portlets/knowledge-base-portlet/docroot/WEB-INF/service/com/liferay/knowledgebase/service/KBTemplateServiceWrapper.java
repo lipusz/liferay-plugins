@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -131,6 +131,7 @@ public class KBTemplateServiceWrapper implements KBTemplateService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public KBTemplateService getWrappedKBTemplateService() {
 		return _kbTemplateService;
 	}
@@ -138,6 +139,7 @@ public class KBTemplateServiceWrapper implements KBTemplateService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedKBTemplateService(KBTemplateService kbTemplateService) {
 		_kbTemplateService = kbTemplateService;
 	}
