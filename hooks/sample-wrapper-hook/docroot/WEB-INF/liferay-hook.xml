@@ -6,4 +6,8 @@
 		<service-type>com.liferay.portal.service.UserLocalService</service-type>
 		<service-impl>com.liferay.samplewrapper.hook.service.impl.SampleWrapperUserLocalServiceImpl</service-impl>
 	</service>
+	<service>
+		<service-type>com.liferay.portlet.documentlibrary.service.DLFileEntryLocalService</service-type>
+		<service-impl>com.liferay.samplewrapper.hook.service.impl.SampleDLFileEntryLocalServiceImpl</service-impl>
+	</service>
 </hook>
