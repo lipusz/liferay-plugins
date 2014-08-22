@@ -30,9 +30,11 @@ import com.liferay.portal.kernel.poller.PollerRequest;
 import com.liferay.portal.kernel.poller.PollerResponse;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.ContactConstants;
 import com.liferay.portal.model.User;
+import com.liferay.portal.model.UserConstants;
 import com.liferay.portal.service.UserLocalServiceUtil;
 
 import java.util.Collections;
@@ -82,13 +84,14 @@ public class ChatPollerProcessor extends BasePollerProcessor {
 		JSONArray buddiesJSONArray = JSONFactoryUtil.createJSONArray();
 
 		for (Object[] buddy : buddies) {
-			long userId = (Long)buddy[0];
-			String screenName = (String)buddy[1];
-			String firstName = (String)buddy[2];
-			String middleName = (String)buddy[3];
-			String lastName = (String)buddy[4];
-			long portraitId = (Long)buddy[5];
-			boolean awake = (Boolean)buddy[6];
+			String userUuid = (String) buddy[0];
+			long userId = (Long)buddy[1];
+			String screenName = (String)buddy[2];
+			String firstName = (String)buddy[3];
+			String middleName = (String)buddy[4];
+			String lastName = (String)buddy[5];
+			long portraitId = (Long)buddy[6];
+			boolean awake = (Boolean)buddy[7];
 
 			JSONObject curUserJSONObject = JSONFactoryUtil.createJSONObject();
 
@@ -108,6 +111,15 @@ public class ChatPollerProcessor extends BasePollerProcessor {
 			curUserJSONObject.put("groupId", user.getGroupId());
 
 			curUserJSONObject.put("portraitId", portraitId);
+
+			//Build portraitURL
+			//Leave imagePath blank, because we don't have a ThemeDisplay here
+			//but we will add it in main.js
+			String portraitURL = UserConstants.getPortraitURL(
+				StringPool.BLANK, user.isMale(), portraitId, userUuid);
+
+			curUserJSONObject.put("portraitURL", portraitURL);
+
 			curUserJSONObject.put("screenName", screenName);
 
 			String statusMessage = buddyStatus.getMessage();
