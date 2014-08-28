@@ -45,6 +45,15 @@ public class AdminSubscriptionSender extends SubscriptionSender {
 	public AdminSubscriptionSender(
 		KBArticle kbArticle, ServiceContext serviceContext) {
 
+		this(kbArticle, serviceContext, DEFAULT_ADD_UNIQUE_MAIL_ID);
+	}
+
+	public AdminSubscriptionSender(
+		KBArticle kbArticle, ServiceContext serviceContext,
+		boolean addUniqueMailId) {
+
+		super(addUniqueMailId);
+
 		_kbArticle = kbArticle;
 		_serviceContext = serviceContext;
 	}
