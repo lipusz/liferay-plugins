@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry excluding="**/.svn/**|.svn/" kind="src" path="docroot/WEB-INF/src"/>
+	<classpathentry exported="true" kind="lib" path="/home/tibusz/dev/apache-tomcat-bundles/apache-tomcat-7.0.56/lib/servlet-api.jar"/>
+	<classpathentry kind="lib" path="/home/tibusz/dev/apache-tomcat-bundles/apache-tomcat-7.0.56/lib/annotations-api.jar"/>
+	<classpathentry kind="lib" path="/home/tibusz/dev/apache-tomcat-bundles/apache-tomcat-7.0.56/lib/jasper.jar"/>
+	<classpathentry kind="lib" path="/home/tibusz/dev/apache-tomcat-bundles/apache-tomcat-7.0.56/lib/jsp-api.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
