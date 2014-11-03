@@ -18,8 +18,12 @@ import java.io.InputStream;
 import java.util.List;
 
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portlet.documentlibrary.util.DLPreviewableProcessor;
 import com.liferay.portlet.documentlibrary.util.PDFProcessor;
@@ -35,7 +39,6 @@ public class CustomPDFProcessorImpl
 		throws Exception {
 
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -43,8 +46,7 @@ public class CustomPDFProcessorImpl
 		FileVersion sourceFileVersion, FileVersion destinationFileVersion)
 		throws Exception {
 
-		// TODO Auto-generated method stub
-		
+		_log.info("generateImages");
 	}
 
 	@Override
@@ -89,7 +91,8 @@ public class CustomPDFProcessorImpl
 	@Override
 	public boolean hasImages(FileVersion fileVersion) {
 
-		// TODO Auto-generated method stub
+		_log.info("hasImages");
+
 		return false;
 	}
 
@@ -102,8 +105,18 @@ public class CustomPDFProcessorImpl
 
 	@Override
 	public boolean isDocumentSupported(String mimeType) {
+		_log.info("isDocumentSupported");
 
-		// TODO Auto-generated method stub
+		if (Validator.isNull(mimeType)) {
+			return false;
+		}
+
+		if (mimeType.equals(ContentTypes.APPLICATION_PDF) ||
+			mimeType.equals(ContentTypes.APPLICATION_X_PDF)) {
+
+			return true;
+		}
+
 		return false;
 	}
 
@@ -121,7 +134,6 @@ public class CustomPDFProcessorImpl
 		throws Exception {
 
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -131,7 +143,6 @@ public class CustomPDFProcessorImpl
 		throws Exception {
 
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -155,5 +166,7 @@ public class CustomPDFProcessorImpl
 		return null;
 	}
 
-		
+	private static final Log _log = LogFactoryUtil.getLog(
+		CustomPDFProcessorImpl.class);
+
 }
