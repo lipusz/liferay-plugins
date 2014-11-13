@@ -14,7 +14,6 @@
 
 package com.liferay.techbook.servletsandjsp.listener;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
@@ -29,10 +28,6 @@ public class TechbookServletContextListener implements ServletContextListener {
 
 	@Override
 	public void contextInitialized(ServletContextEvent servletContextEvent) {
-		ServletContext servletContext = servletContextEvent.getServletContext();
-
-		servletContext.setAttribute(
-			"techbook-attribute","techbook-attribute-value");
 	}
 
 }
