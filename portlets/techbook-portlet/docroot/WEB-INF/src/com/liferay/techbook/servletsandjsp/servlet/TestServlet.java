@@ -15,14 +15,16 @@
 package com.liferay.techbook.servletsandjsp.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
-import javax.servlet.ServletConfig;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.liferay.techbook.servletandjsp.model.User;
 
 /**
  * @author Tibor Lipusz
@@ -34,25 +36,65 @@ public class TestServlet extends HttpServlet {
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
 
-		PrintWriter out = response.getWriter();
+		request.setAttribute("serialVersionUID", serialVersionUID);
+
+		HttpSession session = request.getSession();
+
+		if (session != null) {
+			User user = (User)session.getAttribute("user");
+
+			if (user != null) {
+				_userCount++;
+
+				request.setAttribute("user", user);
+
+				session.removeAttribute("user");
+			}
+		}
+
+		request.setAttribute("userCount", _userCount);
 
 		ServletContext servletContext = getServletContext();
 
-		out.println("Success!");
-		out.println(
-			"ServletContext init param: " +
-			servletContext.getInitParameter("techbook-param-1"));
-		out.println(
-			"ServletContext attribute: " +
-			servletContext.getAttribute("techbook-attribute"));
+		RequestDispatcher dispatcher = servletContext.getRequestDispatcher(
+			"/view.jsp");
 
-		ServletConfig servletConfig = getServletConfig();
+		dispatcher.forward(request, response);
+	}
 
-		out.println(
-			"TestServlet init param: " +
-			servletConfig.getInitParameter("servlet-init-param-1"));
+	@Override
+	public void doPost(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException, ServletException {
+
+		String email = request.getParameter("email");
+		String firstName = request.getParameter("firstName");
+
+		if ((email != null) && (firstName != null)) {
+			User user = new User(email, firstName);
+
+			HttpSession session = request.getSession(true);
+
+			session.setAttribute("user", user);
+		}
+
+		response.sendRedirect("view");
+	}
+
+	protected void doForward(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException, ServletException {
+
+		ServletContext servletContext = getServletContext();
+
+		RequestDispatcher dispatcher = servletContext.getRequestDispatcher(
+			"/view.jsp");
+
+		dispatcher.forward(request, response);
 	}
 
 	private static final long serialVersionUID = -8922584214068366001L;
+
+	private int _userCount = 0;
 
 }

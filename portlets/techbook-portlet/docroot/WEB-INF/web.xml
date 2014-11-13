@@ -21,13 +21,13 @@
 	<servlet>
 		<servlet-name>TestServlet</servlet-name>
 		<servlet-class>com.liferay.techbook.servletsandjsp.servlet.TestServlet</servlet-class>
-		<init-param>
-			<param-name>servlet-init-param-1</param-name>
-			<param-value>Liferay</param-value>
-		</init-param>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>TestServlet</servlet-name>
-		<url-pattern>/test</url-pattern>
+		<url-pattern>/view</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>TestServlet</servlet-name>
+		<url-pattern>/save</url-pattern>
 	</servlet-mapping>
 </web-app>
