@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Context antiResourceLocking="false" docBase="../techbook-portlet-7.0.0.1.war" path="/techbook" privileged="true" >
+
+</Context>
