@@ -1,0 +1,8 @@
+.project
+.classpath
+compile.sh
+deploy.sh
+WEB-INF/lib
+WEB-INF/lib-src/
+WEB-INF/src
+exclude.txt
