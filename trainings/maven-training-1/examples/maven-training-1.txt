@@ -1,0 +1,14 @@
+Introduction to Project Builder & Management Tools: Ant, Maven
+
+Hello Everyone,
+
+This training - or rather, workshop- the first event of a series and will hopefully give you a brief introduction to the concept of project builders and management tools and also will show their key elements in order to use them in simple projects.
+
+The aim is not to just show you how to use ant or maven, rather, let you think about them and understand them. In order to achieve this we start from the basics and then, we will approach the "maven way" through some example project.
+
+Finally, on the second event, we will explore how we can use Maven to build plugins for Liferay.
+
+The structure of this workshop is the following:
+1- All sources and libs and the runtime you need (beyond prerequisites enlisted at the beginning of the presentation such as JDK, ANT, MAVEN installation) are located in the $zip
+2- We use apache-tomcat-7.0.56 as container to test our sample applications
+3- Each of the phases has its own Eclipse projects, so they contain .classpath and .project metadata descriptors
