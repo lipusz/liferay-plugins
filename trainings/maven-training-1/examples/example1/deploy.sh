@@ -1,6 +1,7 @@
 #!/bin/bash
 
 export TOMCAT_HOME=../../apache-tomcat-7.0.56
+#export TOMCAT_HOME=/home/tibusz/dev/apache-tomcat-bundles/apache-tomcat-7.0.56
 
 rm --recursive $TOMCAT_HOME/webapps/example1
 
