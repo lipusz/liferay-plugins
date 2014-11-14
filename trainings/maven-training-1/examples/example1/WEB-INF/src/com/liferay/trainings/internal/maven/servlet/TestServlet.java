@@ -38,7 +38,7 @@ public class TestServlet extends HttpServlet {
 		ServletContext servletContext = getServletContext();
 
 		RequestDispatcher dispatcher = servletContext.getRequestDispatcher(
-			"/view.jsp");
+			"/jsp/view.jsp");
 
 		dispatcher.forward(request, response);
 	}
