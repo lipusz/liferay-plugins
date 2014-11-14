@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.techbook.servletandjsp.model;
+package com.liferay.techbook.servletsandjsp.model;
 
 /**
  * @author Tibor Lipusz

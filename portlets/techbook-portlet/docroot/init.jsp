@@ -14,4 +14,4 @@
  */
 --%>
 
-<%@ page import="com.liferay.techbook.servletandjsp.model.User" %>
+<%@ page import="com.liferay.techbook.servletsandjsp.model.User" %>
