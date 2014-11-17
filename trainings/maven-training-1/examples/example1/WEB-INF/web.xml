@@ -14,6 +14,11 @@
 		</taglib>
 	</jsp-config>
 
+	<listener>
+		<display-name>TestListener</display-name>
+		<listener-class>com.liferay.trainings.internal.maven.servlet.listener.TestServletContextListener</listener-class>
+	</listener>
+
 	<servlet>
 		<servlet-name>TestServlet</servlet-name>
 		<servlet-class>com.liferay.trainings.internal.maven.servlet.TestServlet</servlet-class>

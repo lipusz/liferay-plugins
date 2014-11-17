@@ -20,8 +20,8 @@
 	</head>
 
 	<body onload="sayHello()">
-		<label for="serialVersionUID">SerialVersionUID of the servlet: </label>
-		<input id="serialVersionUID" value='<%= request.getAttribute("serialVersionUID") %>'>
+		SerialVersionUID of the servlet: <input id="serialVersionUID" value='<%= request.getAttribute("serialVersionUID") %>'>
+		Property from "example.properties": <input id="property" value="<%= request.getAttribute("property") %>"/>
 
 		<hr>
 	</body>

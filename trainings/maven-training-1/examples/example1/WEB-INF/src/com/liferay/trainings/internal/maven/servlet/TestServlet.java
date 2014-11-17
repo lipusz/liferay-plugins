@@ -33,9 +33,11 @@ public class TestServlet extends HttpServlet {
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
 
-		request.setAttribute("serialVersionUID", serialVersionUID);
-
 		ServletContext servletContext = getServletContext();
+
+		request.setAttribute(
+			"property", servletContext.getAttribute("property"));
+		request.setAttribute("serialVersionUID", serialVersionUID);
 
 		RequestDispatcher dispatcher = servletContext.getRequestDispatcher(
 			"/jsp/view.jsp");
