@@ -43,5 +43,6 @@ _sass_cache_*.css
 /themes/*/docroot/WEB-INF/lib
 
 /*/*/*/*/WEB-INF/classes
+/*/*/*/*/*.jar
 
 /tools/*/*/*/lib
