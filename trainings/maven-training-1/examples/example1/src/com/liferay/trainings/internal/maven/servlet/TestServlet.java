@@ -40,7 +40,7 @@ public class TestServlet extends HttpServlet {
 		request.setAttribute("serialVersionUID", serialVersionUID);
 
 		RequestDispatcher dispatcher = servletContext.getRequestDispatcher(
-			"/jsp/view.jsp");
+			"/content/view.jsp");
 
 		dispatcher.forward(request, response);
 	}
