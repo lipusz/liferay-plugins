@@ -6,8 +6,9 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/servlet-api.jar" sourcepath="web/WEB-INF/lib-src/javax.servlet-api-3.0.1-sources.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/easyconf.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/jsp-api.jar" sourcepath="web/WEB-INF/lib-src/jsp-api-2.2-sources.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/servlet-api.jar" sourcepath="web/WEB-INF/lib-src/javax.servlet-api-3.0.1-sources.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="output" path="build/classes"/>

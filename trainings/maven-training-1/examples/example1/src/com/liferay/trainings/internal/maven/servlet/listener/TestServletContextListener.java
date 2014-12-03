@@ -14,9 +14,6 @@
 
 package com.liferay.trainings.internal.maven.servlet.listener;
 
-import java.io.IOException;
-import java.util.Properties;
-
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -36,23 +33,36 @@ public class TestServletContextListener implements ServletContextListener {
 	}
 
 	protected void doLoadProperties(ServletContextEvent servletContextEvent) {
+		ServletContext servletContext = servletContextEvent.getServletContext();
+
+		String propsValue = "Something went wrong loading...";
 
 		// Load properties without EasyConf
 
-		Properties properties = new Properties();
+//		java.util.Properties properties = new Properties();
+//
+//		try {
+//			properties.load(
+//				servletContext.getResourceAsStream(
+//					"/WEB-INF/classes/example.properties"));
+//
+//			propsValue = properties.getProperty("key");
+//		}
+//		catch (java.io.IOException ioException) {
+//			properties.setProperty("maven.example", propsValue);
+//		}
 
-		ServletContext servletContext = servletContextEvent.getServletContext();
+		// Load properties with EasyConf
 
-		try {
-			properties.load(
-				servletContext.getResourceAsStream(
-					"/WEB-INF/classes/example.properties"));
-		}
-		catch (IOException ioException) {
-			properties.setProperty("key", "Maven Training");
-		}
+		com.germinus.easyconf.ComponentConfiguration conf =
+			com.germinus.easyconf.EasyConf.getConfiguration("example");
 
-		servletContext.setAttribute("property", properties.getProperty("key"));
+		com.germinus.easyconf.ComponentProperties properties =
+			conf.getProperties();
+
+		propsValue = properties.getString("maven.example", propsValue);
+
+		servletContext.setAttribute("property", propsValue);
 	}
 
 }
