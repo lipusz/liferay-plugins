@@ -11,7 +11,7 @@ TOMCAT_DEPLOY_DIR=/home/tibusz/dev/apache-tomcat/tomcat-7.0.56/webapps/maven1
 #############
 
 	##
-	## Delete & re-create output folder
+	## Delete & re-create build folder
 	##
 
 	rm -rf build
@@ -37,6 +37,8 @@ TOMCAT_DEPLOY_DIR=/home/tibusz/dev/apache-tomcat/tomcat-7.0.56/webapps/maven1
 	### 3rd part: package as JAR
 	###
 
+	cp src/example.properties build
+
 	cd build
 
 	jar cvf $JAR_NAME *
@@ -48,22 +50,13 @@ TOMCAT_DEPLOY_DIR=/home/tibusz/dev/apache-tomcat/tomcat-7.0.56/webapps/maven1
 ############
 
 	rm -rf $TOMCAT_DEPLOY_DIR
+
 	mkdir $TOMCAT_DEPLOY_DIR
-
-	###
-	### 1st part: copy the necessary files
-	###
-
-	#rsync -rvz --exclude-from='exclude.txt' . $TOMCAT_DEPLOY_DIR
-
-	###
-	###
-	###
-
 	mkdir -p $TOMCAT_DEPLOY_DIR/WEB-INF/classes
 	mkdir -p $TOMCAT_DEPLOY_DIR/WEB-INF/lib
 
 	cp build/$JAR_NAME $TOMCAT_DEPLOY_DIR/WEB-INF/lib
+	cp web/WEB-INF/lib/easyconf.jar $TOMCAT_DEPLOY_DIR/WEB-INF/lib
+	cp -r web/WEB-INF/lib/easyconf-deps/* $TOMCAT_DEPLOY_DIR/WEB-INF/lib
 	cp -r web/content $TOMCAT_DEPLOY_DIR/
-	cp src/example.properties $TOMCAT_DEPLOY_DIR/WEB-INF/classes
 	cp web/WEB-INF/web.xml $TOMCAT_DEPLOY_DIR/WEB-INF
