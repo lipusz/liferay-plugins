@@ -1,7 +1,9 @@
 #!/bin/bash
 
-#TOMCAT_DEPLOY_DIR="../../apache-tomcat-7.0.56"
-TOMCAT_DEPLOY_DIR=/home/tibusz/dev/apache-tomcat-bundles/apache-tomcat-7.0.56/webapps/example1
+JAR_NAME="maven1.jar"
+
+#TOMCAT_DEPLOY_DIR="../../apache-tomcat-7.0.56/webapps/maven1"
+TOMCAT_DEPLOY_DIR=/home/tibusz/dev/apache-tomcat/tomcat-7.0.56/webapps/maven1
 
 
 #############
@@ -12,16 +14,13 @@ TOMCAT_DEPLOY_DIR=/home/tibusz/dev/apache-tomcat-bundles/apache-tomcat-7.0.56/we
 	## Delete & re-create output folder
 	##
 
-	OUTPUT="WEB-INF/classes"
-
-	rm -rf $OUTPUT
-
-	mkdir $OUTPUT
+	rm -rf build
+	mkdir build
 
 	###
 	### 1st part
 	###
-	#-javac -cp "WEB-INF/lib/*" -d $OUTPUT WEB-INF/src/com/liferay/trainings/internal/maven/servlet/TestServlet.java
+	#javac -cp "web/WEB-INF/lib/*" -d build web/WEB-INF/src/com/liferay/trainings/internal/maven/servlet/TestServlet.java
 
 
 	###
@@ -30,7 +29,7 @@ TOMCAT_DEPLOY_DIR=/home/tibusz/dev/apache-tomcat-bundles/apache-tomcat-7.0.56/we
 
 	find -name "*.java" > sources.txt
 
-	javac -cp "WEB-INF/lib/*" -d $OUTPUT @sources.txt
+	javac -cp "web/WEB-INF/lib/*" -d build @sources.txt
 
 	rm sources.txt
 
@@ -38,20 +37,17 @@ TOMCAT_DEPLOY_DIR=/home/tibusz/dev/apache-tomcat-bundles/apache-tomcat-7.0.56/we
 	### 3rd part: package as JAR
 	###
 
-	jarName="example.jar"
+	cd build
 
-	cd WEB-INF/classes
+	jar cvf $JAR_NAME *
 
-	jar cvf $jarName *
-
-	cd ../..
+	cd ..
 
 ############
 ### Deploy #
 ############
 
 	rm -rf $TOMCAT_DEPLOY_DIR
-
 	mkdir $TOMCAT_DEPLOY_DIR
 
 	###
@@ -67,7 +63,7 @@ TOMCAT_DEPLOY_DIR=/home/tibusz/dev/apache-tomcat-bundles/apache-tomcat-7.0.56/we
 	mkdir -p $TOMCAT_DEPLOY_DIR/WEB-INF/classes
 	mkdir -p $TOMCAT_DEPLOY_DIR/WEB-INF/lib
 
-	cp $jarName $TOMCAT_DEPLOY_DIR/WEB-INF/lib
-	cp -r jsp $TOMCAT_DEPLOY_DIR/
-	cp WEB-INF/src/example.properties $TOMCAT_DEPLOY_DIR/WEB-INF/classes
-	cp WEB-INF/web.xml $TOMCAT_DEPLOY_DIR/WEB-INF
+	cp build/$JAR_NAME $TOMCAT_DEPLOY_DIR/WEB-INF/lib
+	cp -r web/content $TOMCAT_DEPLOY_DIR/
+	cp src/example.properties $TOMCAT_DEPLOY_DIR/WEB-INF/classes
+	cp web/WEB-INF/web.xml $TOMCAT_DEPLOY_DIR/WEB-INF
