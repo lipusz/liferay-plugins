@@ -13,14 +13,15 @@
  * details.
  */
 --%>
+ <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 
-<html>
+<html lang="en">
 	<head>
 		<title>Main Page</title>
+		<meta charset="UTF-8" />
 	</head>
-
-	<body onload="sayHello()">
-		SerialVersionUID of the servlet: <input id="serialVersionUID" value='<%= request.getAttribute("serialVersionUID") %>'>
+	<body>
+		SerialVersionUID of the servlet: <input id="serialVersionUID" value='<%= request.getAttribute("serialVersionUID") %>' />
 		Property from "example.properties": <input id="property" value="<%= request.getAttribute("property") %>" />
 
 		<hr>

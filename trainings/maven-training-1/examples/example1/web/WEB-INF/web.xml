@@ -12,6 +12,10 @@
 			<taglib-uri>http://java.sun.com/jsp/jstl/core</taglib-uri>
 			<taglib-location>/WEB-INF/tld/c.tld</taglib-location>
 		</taglib>
+		<jsp-property-group>
+			<url-pattern>*.jsp</url-pattern>
+			<page-encoding>UTF-8</page-encoding>
+		</jsp-property-group>
 	</jsp-config>
 
 	<listener>
