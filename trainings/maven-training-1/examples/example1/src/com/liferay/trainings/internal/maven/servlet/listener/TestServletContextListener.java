@@ -60,7 +60,7 @@ public class TestServletContextListener implements ServletContextListener {
 		com.germinus.easyconf.ComponentProperties properties =
 			conf.getProperties();
 
-		propsValue = properties.getString("maven.example", propsValue);
+		propsValue = properties.getString("test.key.1", propsValue);
 
 		servletContext.setAttribute("property", propsValue);
 	}
