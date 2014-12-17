@@ -24,12 +24,12 @@ import javax.servlet.ServletContextListener;
 public class TestServletContextListener implements ServletContextListener {
 
 	@Override
-	public void contextInitialized(ServletContextEvent servletContextEvent) {
-		doLoadProperties(servletContextEvent);
+	public void contextDestroyed(ServletContextEvent servletContextEvent) {
 	}
 
 	@Override
-	public void contextDestroyed(ServletContextEvent servletContextEvent) {
+	public void contextInitialized(ServletContextEvent servletContextEvent) {
+		doLoadProperties(servletContextEvent);
 	}
 
 	protected void doLoadProperties(ServletContextEvent servletContextEvent) {
