@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,26 +11,43 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
-<%@ page import="com.liferay.trainings.internal.maven.model.User" pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 
-<%
-User user = (User)request.getAttribute("user");
+package com.liferay.trainings.internal.maven.model;
 
-if (user == null) {
-	user = new User(-1, "Something went wrong. User could not be read from the request.");
+import java.io.Serializable;
+
+/**
+ * @author Tibor Lipusz
+ */
+public class User implements Serializable {
+
+	public User() {
+	}
+
+	public User(int age, String name) {
+		_age = age;
+		_name = name;
+	}
+
+	public int getAge() {
+		return _age;
+	}
+
+	public String getName() {
+		return _name;
+	}
+
+	public void setAge(int age) {
+		_age = age;
+	}
+
+	public void setName(String name) {
+		_name = name;
+	}
+
+	private static final long serialVersionUID = 5363735489701386206L;
+
+	private int _age;
+	private String _name;
+
 }
-%>
-
-<html lang="en">
-	<head>
-		<title>User bean view page</title>
-		<meta charset="UTF-8" />
-	</head>
-	<body>
-		User's age: <input id="userAge" value="<%= user.getAge() %>" />
-		User's name: <input id="property" value="<%= user.getName() %>" />
-
-		<hr>
-	</body>
-</html>

@@ -29,30 +29,7 @@ public class TestServletContextListener implements ServletContextListener {
 
 	@Override
 	public void contextInitialized(ServletContextEvent servletContextEvent) {
-		doLoadProperties(servletContextEvent);
-	}
-
-	protected void doLoadProperties(ServletContextEvent servletContextEvent) {
 		ServletContext servletContext = servletContextEvent.getServletContext();
-
-		String propsValue = "Something went wrong loading...";
-
-		// Load properties without EasyConf
-
-//		java.util.Properties properties = new Properties();
-//
-//		try {
-//			properties.load(
-//				servletContext.getResourceAsStream(
-//					"/WEB-INF/classes/example.properties"));
-//
-//			propsValue = properties.getProperty("key");
-//		}
-//		catch (java.io.IOException ioException) {
-//			properties.setProperty("maven.example", propsValue);
-//		}
-
-		// Load properties with EasyConf
 
 		com.germinus.easyconf.ComponentConfiguration conf =
 			com.germinus.easyconf.EasyConf.getConfiguration("example");
@@ -60,9 +37,15 @@ public class TestServletContextListener implements ServletContextListener {
 		com.germinus.easyconf.ComponentProperties properties =
 			conf.getProperties();
 
-		propsValue = properties.getString("test.key.1", propsValue);
+		boolean overrideBeanDefaults = properties.getBoolean(
+			"override.bean.defaults", false);
+		int userAge = properties.getInt("user.bean.age", -1);
+		String userName = properties.getString("user.bean.name", "");
 
-		servletContext.setAttribute("property", propsValue);
+		servletContext.setAttribute(
+			"overrideBeanDefaults", overrideBeanDefaults);
+		servletContext.setAttribute("userAge", userAge);
+		servletContext.setAttribute("userName", userName);
 	}
 
 }

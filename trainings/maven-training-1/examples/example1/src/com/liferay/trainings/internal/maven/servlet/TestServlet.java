@@ -14,14 +14,20 @@
 
 package com.liferay.trainings.internal.maven.servlet;
 
+import com.liferay.trainings.internal.maven.model.User;
+
 import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.BeansException;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  * @author Tibor Lipusz
@@ -29,15 +35,44 @@ import javax.servlet.http.HttpServletResponse;
 public class TestServlet extends HttpServlet {
 
 	@Override
+	public void init(ServletConfig config) throws ServletException {
+		super.init(config);
+
+		ClassPathXmlApplicationContext appContext = null;
+
+		try {
+			appContext = new ClassPathXmlApplicationContext("beans.xml");
+
+			_user = (User)appContext.getBean(User.class);
+
+			ServletContext servletContext = getServletContext();
+
+			boolean overrideBeanDefaults = (Boolean)servletContext.getAttribute(
+				"overrideBeanDefaults");
+
+			if (overrideBeanDefaults) {
+				_user.setAge((Integer)servletContext.getAttribute("userAge"));
+				_user.setName((String)servletContext.getAttribute("userName"));
+			}
+		}
+		catch (BeansException beansException) {
+			_user = new User(-1, "Error loading user bean.");
+		}
+		finally {
+			if (appContext != null) {
+				appContext.close();
+			}
+		}
+	}
+
+	@Override
 	protected void doGet(
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
 
-		ServletContext servletContext = getServletContext();
+		request.setAttribute("user", _user);
 
-		request.setAttribute(
-			"property", servletContext.getAttribute("property"));
-		request.setAttribute("serialVersionUID", serialVersionUID);
+		ServletContext servletContext = getServletContext();
 
 		RequestDispatcher dispatcher = servletContext.getRequestDispatcher(
 			"/content/view.jsp");
@@ -46,5 +81,7 @@ public class TestServlet extends HttpServlet {
 	}
 
 	private static final long serialVersionUID = -8922584214068366001L;
+
+	private User _user;
 
 }
