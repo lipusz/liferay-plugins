@@ -29,6 +29,8 @@ JAR_NAME="maven1.jar"
 	### 2nd part: added more source files + properties file
 	###
 
+	echo -e "[compile]\n"
+
 	find -name "*.java" > sources.txt
 
 	javac -cp "web/WEB-INF/lib/*:web/WEB-INF/lib-dev/*" -d build @sources.txt
@@ -38,6 +40,8 @@ JAR_NAME="maven1.jar"
 	###
 	### 3rd part: package as JAR
 	###
+
+	echo -e "[package <jar>]\n"
 
 	cp src/beans.xml build
 	cp src/example.properties build
@@ -57,6 +61,8 @@ JAR_NAME="maven1.jar"
 	mkdir $DEPLOY_DIR
 	mkdir -p $DEPLOY_DIR/WEB-INF/classes
 	mkdir -p $DEPLOY_DIR/WEB-INF/lib
+
+	echo -e "\n[deploy] to $DEPLOY_DIR\n"
 
 	cp build/$JAR_NAME $DEPLOY_DIR/WEB-INF/lib
 	cp -r web/WEB-INF/lib/* $DEPLOY_DIR/WEB-INF/lib
