@@ -1,9 +1,13 @@
 #!/bin/bash
 
-JAR_NAME="maven1.jar"
+#####################
+###	Build constants	#
+#####################
 
-#TOMCAT_DEPLOY_DIR="../../apache-tomcat-7.0.56/webapps/maven1"
-TOMCAT_DEPLOY_DIR=/home/tibusz/dev/apache-tomcat/tomcat-7.0.56/webapps/maven1
+#DEPLOY_DIR="../../apache-tomcat-7.0.56/webapps/maven1"
+DEPLOY_DIR=/home/tibusz/dev/apache-tomcat/tomcat-7.0.56/webapps/maven1
+
+JAR_NAME="maven1.jar"
 
 #############
 ### Compile #
@@ -48,13 +52,13 @@ TOMCAT_DEPLOY_DIR=/home/tibusz/dev/apache-tomcat/tomcat-7.0.56/webapps/maven1
 ### Deploy #
 ############
 
-	rm -rf $TOMCAT_DEPLOY_DIR
+	rm -rf $DEPLOY_DIR
 
-	mkdir $TOMCAT_DEPLOY_DIR
-	mkdir -p $TOMCAT_DEPLOY_DIR/WEB-INF/classes
-	mkdir -p $TOMCAT_DEPLOY_DIR/WEB-INF/lib
+	mkdir $DEPLOY_DIR
+	mkdir -p $DEPLOY_DIR/WEB-INF/classes
+	mkdir -p $DEPLOY_DIR/WEB-INF/lib
 
-	cp build/$JAR_NAME $TOMCAT_DEPLOY_DIR/WEB-INF/lib
-	cp -r web/WEB-INF/lib/* $TOMCAT_DEPLOY_DIR/WEB-INF/lib
-	cp -r web/content $TOMCAT_DEPLOY_DIR/
-	cp web/WEB-INF/web.xml $TOMCAT_DEPLOY_DIR/WEB-INF
+	cp build/$JAR_NAME $DEPLOY_DIR/WEB-INF/lib
+	cp -r web/WEB-INF/lib/* $DEPLOY_DIR/WEB-INF/lib
+	cp -r web/content $DEPLOY_DIR/
+	cp web/WEB-INF/web.xml $DEPLOY_DIR/WEB-INF
