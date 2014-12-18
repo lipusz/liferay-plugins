@@ -17,59 +17,35 @@ package com.liferay.trainings.internal.maven.model;
 import java.io.Serializable;
 
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
  * @author Tibor Lipusz
  */
 @Component
-public class User implements InitializingBean, Serializable {
+public class Dog implements InitializingBean, Serializable {
 
-	public User() {
+	public Dog() {
 	}
 
-	public User(int age, String name) {
-		_age = age;
+	public Dog(String name) {
 		_name = name;
 	}
 
 	@Override
 	public void afterPropertiesSet() throws Exception {
-		_age = 2014;
-		_name = "Liferay, Inc.";
-	}
-
-	public int getAge() {
-		return _age;
-	}
-
-	public Dog getDog() {
-		return _dog;
+		_name = "Ray";
 	}
 
 	public String getName() {
 		return _name;
 	}
 
-	public void setAge(int age) {
-		_age = age;
-	}
-
-	public void setDog(Dog dog) {
-		_dog = dog;
-	}
-
 	public void setName(String name) {
 		_name = name;
 	}
 
-	private static final long serialVersionUID = 5363735489701386206L;
-
-	private int _age;
-
-	@Autowired
-	private Dog _dog;
+	private static final long serialVersionUID = -25148928676393299L;
 
 	private String _name;
 

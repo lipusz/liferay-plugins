@@ -13,14 +13,21 @@
  * details.
  */
 --%>
-<%@ page import="com.liferay.trainings.internal.maven.model.User" pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
+<%@ page
+	import="com.liferay.trainings.internal.maven.model.*"
+	pageEncoding="UTF-8"
+	contentType="text/html; charset=UTF-8" %>
 
 <%
 User user = (User)request.getAttribute("user");
 
 if (user == null) {
 	user = new User(-1, "Something went wrong. User could not be read from the request.");
+
+	user.setDog(new Dog("Oops."));
 }
+
+Dog dog = user.getDog();
 %>
 
 <html lang="en">
@@ -30,7 +37,8 @@ if (user == null) {
 	</head>
 	<body>
 		User's age: <input id="userAge" value="<%= user.getAge() %>" />
-		User's name: <input id="property" value="<%= user.getName() %>" />
+		User's name: <input id="userName" value="<%= user.getName() %>" />
+		User's dog's name: <input id="dogName" value="<%= dog.getName() %>" />
 
 		<hr>
 	</body>

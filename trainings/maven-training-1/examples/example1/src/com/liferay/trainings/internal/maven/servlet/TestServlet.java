@@ -14,6 +14,7 @@
 
 package com.liferay.trainings.internal.maven.servlet;
 
+import com.liferay.trainings.internal.maven.model.Dog;
 import com.liferay.trainings.internal.maven.model.User;
 
 import java.io.IOException;
@@ -57,6 +58,8 @@ public class TestServlet extends HttpServlet {
 		}
 		catch (BeansException beansException) {
 			_user = new User(-1, "Error loading user bean.");
+
+			_user.setDog(new Dog("No user, no dog bean."));
 		}
 		finally {
 			if (appContext != null) {
