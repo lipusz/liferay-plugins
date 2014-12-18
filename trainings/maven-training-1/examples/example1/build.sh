@@ -4,10 +4,10 @@
 ###	Build constants	#
 #####################
 
-#DEPLOY_DIR="../../apache-tomcat-7.0.56/webapps/maven1"
-DEPLOY_DIR=/home/tibusz/dev/apache-tomcat/tomcat-7.0.56/webapps/maven1
+	#DEPLOY_DIR="../../apache-tomcat-7.0.56/webapps/maven1"
+	DEPLOY_DIR=/home/tibusz/dev/apache-tomcat/tomcat-7.0.56/webapps/maven1
 
-JAR_NAME="maven1.jar"
+	JAR_NAME="maven1.jar"
 
 #############
 ### Compile #
@@ -72,3 +72,8 @@ JAR_NAME="maven1.jar"
 	cp -r web/WEB-INF/lib/* $DEPLOY_DIR/WEB-INF/lib
 	cp -r web/content $DEPLOY_DIR/
 	cp web/WEB-INF/web.xml $DEPLOY_DIR/WEB-INF
+
+echo -e "######################################"
+echo "### Build finished with no errors. ###"
+echo "### $(date)   ###"
+echo -e "######################################\n"
