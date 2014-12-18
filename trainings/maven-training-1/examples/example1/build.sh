@@ -33,11 +33,11 @@
 
 	find -name "*.java" > sources.txt
 
+	javac -cp "web/WEB-INF/lib/*:web/WEB-INF/lib-dev/*" -d build @sources.txt
+
 	cat sources.txt
 
 	echo -e "\n<Number source files compiled: $(wc -l < sources.txt)>\n"
-
-	javac -cp "web/WEB-INF/lib/*:web/WEB-INF/lib-dev/*" -d build @sources.txt
 
 	rm sources.txt
 
