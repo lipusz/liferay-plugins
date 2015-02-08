@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<!DOCTYPE project>
+
+<project name="maven1" basedir="." default="build-project">
+	<target name="build-project">
+	</target>
+</project>
