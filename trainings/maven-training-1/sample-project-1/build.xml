@@ -59,7 +59,6 @@
 
 	<target name="deploy">
 		<delete dir="${deploy.dir}" />
-
 		<mkdir dir="${deploy.dir}" />
 
 		<copy includeemptydirs="false" todir="${deploy.dir}">
