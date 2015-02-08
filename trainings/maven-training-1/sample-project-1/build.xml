@@ -1,7 +1,77 @@
 <?xml version="1.0"?>
 <!DOCTYPE project>
 
-<project name="maven1" basedir="." default="build-project">
+<project name="maven1" basedir="." default="all">
+	<property environment="env"/>
+
+	<property file="build.properties" />
+
+	<target name="all">
+		<antcall target="build-project" />
+		<antcall target="deploy" />
+	</target>
+
 	<target name="build-project">
+		<delete dir="${build.output.dir}" />
+		<mkdir dir="${build.output.dir}" />
+
+		<!-- Compile Java source files -->
+
+		<path id="project.classpath">
+			<fileset dir="web/WEB-INF/lib" includes="*.jar" />
+			<fileset dir="web/WEB-INF/lib-dev" includes="*.jar" />
+		</path>
+
+		<javac
+			debug="${build.debug}"
+			debuglevel="${build.debug.level}"
+			destdir="${build.output.dir}"
+			includeantruntime="false"
+			source="${build.javac.source}"
+			target="${build.javac.target}">
+
+			<src path="src" />
+			<exclude name="**/.git/**" />
+			<exclude name=".git/" />
+			<classpath refid="project.classpath" />
+		</javac>
+
+		<!-- Copy resources to output folder -->
+
+		<copy includeemptydirs="false" todir="${build.output.dir}">
+			<fileset dir="src">
+				<exclude name="**/*.java"/>
+				<exclude name="**/.git/**"/>
+				<exclude name=".git/"/>
+
+				<include name="**/*.properties"/>
+				<include name="**/*.xml"/>
+			</fileset>
+		</copy>
+
+		<!-- Package as Jar -->
+
+		<jar
+			basedir="${build.output.dir}"
+			destfile="${build.output.dir}/${build.package.name}"
+		/>
+	</target>
+
+	<target name="deploy">
+		<delete dir="${deploy.dir}" />
+
+		<mkdir dir="${deploy.dir}" />
+
+		<copy includeemptydirs="false" todir="${deploy.dir}">
+			<fileset dir="web">
+				<exclude name="WEB-INF/lib-dev/*" />
+				<exclude name="WEB-INF/lib-src/*" />
+			</fileset>
+		</copy>
+
+		<copy
+			file="${build.output.dir}/${build.package.name}"
+			toDir="${deploy.dir}/WEB-INF/lib"
+		/>
 	</target>
 </project>
